@@ -20,4 +20,4 @@ The internal workings of the dcm-agent and its interactions with DCM are
 outside of the scope of this document.  However we will present some general
 information on how the agent works in order to assist in trouble shooting.
 
-For more information see docs/README.txt
+For more information see http://dcm-unix-agent.readthedocs.org/en/latest/
