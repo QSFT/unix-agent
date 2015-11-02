@@ -17,6 +17,7 @@ import calendar
 import datetime
 import hashlib
 import threading
+import time
 import uuid
 
 import dcm.agent.utils as utils
@@ -130,7 +131,7 @@ class AlertAckMsg(object):
 
 class AlertSender(object):
 
-    def __init__(self, conn, db, poll_interval=30):
+    def __init__(self, conn, db, poll_interval=5.0):
         self._conn = conn
         self._db = db
         self._alerts = {}
@@ -138,6 +139,7 @@ class AlertSender(object):
         self._thread = None
         self._cond = threading.Condition()
         self._poll_interval = poll_interval
+        self._last_processed = time.time()
 
     def send_alert(self, alert_time, subject, level, rule, message):
         request_id = str(uuid.uuid4())
@@ -189,11 +191,27 @@ class AlertSender(object):
         self._thread = threading.Thread(target=self._run)
         self._thread.start()
 
+    def signal_alert(self):
+        self._cond.acquire()
+        try:
+            self.cond.notify()
+        finally:
+            self._cond.release()
+
     def _run(self):
+        timeout = self._poll_interval
         self._cond.acquire()
         try:
             while not self._stopping.is_set():
                 # do work here
-                self.cond.wait(timeout=self._poll_interval)
+                self.cond.wait(timeout=timeout)
+                time_now = time.time()
+                time_diff = time_now - self._last_processed
+                if  time_diff < self._poll_interval:
+                    timeout = self._poll_interval - time_diff
+                else:
+                    self._last_processed = time_now
+                    timeout = None
+                    # ... parse out the file here.
         finally:
             self._cond.release()
