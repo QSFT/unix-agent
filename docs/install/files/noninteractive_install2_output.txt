@@ -3,9 +3,9 @@
   0     0    0     0    0     0      0      0 --:--:--  0:00:05 --:--:--     0rhel-6.6-x86_64
 100  9933  100  9933    0     0   1952      0  0:00:05  0:00:05 --:--:--  183k
 Starting the installation process...
-Downloading DCM Agent from https://linux.stable.agent.enstratius.com/dcm-agent-rhel-6.6-x86_64.rpm
+Downloading DCM Agent from https://linux-stable-agent.enstratius.com/dcm-agent-rhel-6.6-x86_64.rpm
 This may take a few minutes.
-Downloading https://linux.stable.agent.enstratius.com/dcm-agent-rhel-6.6-x86_64.rpm ...
+Downloading https://linux-stable-agent.enstratius.com/dcm-agent-rhel-6.6-x86_64.rpm ...
 Installing DCM Agent.
 Preparing...                ########################################### [100%]
    1:dcm-agent              ########################################### [100%]

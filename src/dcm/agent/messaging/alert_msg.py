@@ -13,12 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import calendar
-import datetime
-import hashlib
 import threading
-import time
-import uuid
 
 import dcm.agent.utils as utils
 import dcm.agent.events.state_machine as state_machine
@@ -129,89 +124,3 @@ class AlertAckMsg(object):
                                 None)
 
 
-class AlertSender(object):
-
-    def __init__(self, conn, db, poll_interval=5.0):
-        self._conn = conn
-        self._db = db
-        self._alerts = {}
-        self._stopping = None
-        self._thread = None
-        self._cond = threading.Condition()
-        self._poll_interval = poll_interval
-        self._last_processed = time.time()
-
-    def send_alert(self, alert_time, subject, level, rule, message):
-        request_id = str(uuid.uuid4())
-        doc = {
-            'type': 'ALERT',
-            'request_id': request_id,
-            'current_timestamp': calendar.timegm(datetime.time.gmtime()) * 1000,
-            'alert_timestamp': int(alert_time * 1000),
-            'level': level,
-            'rule': rule,
-            'message': message,
-            'subject': subject
-        }
-        alert_msg = AlertAckMsg(doc, self._conn)
-        self._alerts[request_id] = alert_msg
-        alert_msg.send()
-
-    def incoming_message(self, incoming_doc):
-        request_id = incoming_doc['request_id']
-        alert = self._out_standing_alerts[request_id]
-        alert.incoming_message()
-
-        h = hashlib.sha256()
-        h.update(str(alert.doc['alert_timestamp']))
-        h.update(alert.doc['subject'])
-        h.update(alert.doc['message'])
-        alert_hash = h.hexdigest()
-        self._db.add_alert(alert.doc['alert_timestamp'],
-                           alert.doc['current_timestamp'],
-                           alert_hash,
-                           alert.doc['level'],
-                           alert.doc['rule'],
-                           alert.doc['subject'],
-                           alert.doc['message'])
-        del self._out_standing_alerts[request_id]
-
-    def stop(self):
-        self._cond.acquire()
-        try:
-            self._stopping.set()
-            self.cond.notify()
-        finally:
-            self._cond.release()
-
-    def start(self):
-        if self._thread is not None:
-            raise Exception("The alert object has already been started.")
-        self._stopping = threading.Event()
-        self._thread = threading.Thread(target=self._run)
-        self._thread.start()
-
-    def signal_alert(self):
-        self._cond.acquire()
-        try:
-            self.cond.notify()
-        finally:
-            self._cond.release()
-
-    def _run(self):
-        timeout = self._poll_interval
-        self._cond.acquire()
-        try:
-            while not self._stopping.is_set():
-                # do work here
-                self.cond.wait(timeout=timeout)
-                time_now = time.time()
-                time_diff = time_now - self._last_processed
-                if  time_diff < self._poll_interval:
-                    timeout = self._poll_interval - time_diff
-                else:
-                    self._last_processed = time_now
-                    timeout = None
-                    # ... parse out the file here.
-        finally:
-            self._cond.release()

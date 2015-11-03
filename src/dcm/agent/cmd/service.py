@@ -21,7 +21,6 @@ import clint
 import json
 import logging
 import os
-from dcm.agent.messaging import alert_msg
 import psutil
 import signal
 import sys
@@ -37,6 +36,7 @@ import dcm.agent.logger as logger
 import dcm.agent.messaging as messaging
 import dcm.agent.messaging.persistence as persistence
 import dcm.agent.messaging.reply as reply
+import dcm.agent.ossec as ossec
 import dcm.agent.utils as utils
 import dcm.agent.systemstats as systemstats
 
@@ -107,7 +107,7 @@ class DCMAgent(object):
 
             if self.conf.intrusion_detection_ossec:
                 self.intrusion_detection =\
-                    alert_msg.AlertSender(self.conn, self._db)
+                    ossec.AlertSender(self.conn, self._db)
                 self.intrusion_detection.start()
 
             rc = self.agent_main_loop()
