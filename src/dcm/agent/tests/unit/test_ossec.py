@@ -46,5 +46,3 @@ class TestOssec(unittest.TestCase, OssecAlertParser):
     def test_write_to_file(self):
         with open("/tmp/alert.log", 'a') as f:
             f.write(TEST_STRING)
-        value = super(OssecAlertParser, self).process()
-        print(value)
