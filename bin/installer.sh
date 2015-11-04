@@ -17,7 +17,7 @@ AGENT_LOCAL_PACKAGE=<path>
 
 AGENT_BASE_URL=<url>
   - This is the base path to an HTTP repository where the packages are kept.
-    For example: https://linux.development.agent.enstratius.com.  Packages will
+    For example: https://linux-development-agent.enstratius.com.  Packages will
     be found under that url with a name that matches:
     dcm-agent-<distribution>-<distribution version>-<architecture>.<pkg type>
     For example: dcm-agent-ubuntu-10.04-amd64.deb
@@ -87,7 +87,7 @@ Optional Arguments:
 
   --install-extras      Install extras package
 
-  --extra-package-location URL,  url of extra packages to be installed.  Default is http://linux.stable.agent.enstratius.com
+  --extra-package-location URL,  url of extra packages to be installed.  Default is https://linux-stable-agent.enstratius.com
 "
 }
 
@@ -364,9 +364,9 @@ function handle_deps {
 function set_base_url {
     if [[ "X$AGENT_BASE_URL" == "X" || "X$AGENT_BASE_URL" == "XNONE" ]]; then
         if [ "X$AGENT_UNSTABLE" != "X" ]; then
-            export AGENT_BASE_URL="https://linux.development.agent.enstratius.com"
+            export AGENT_BASE_URL="https://linux-development-agent.enstratius.com"
         else
-            export AGENT_BASE_URL="https://linux.stable.agent.enstratius.com"
+            export AGENT_BASE_URL="https://linux-stable-agent.enstratius.com"
         fi
     fi
 }

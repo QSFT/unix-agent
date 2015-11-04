@@ -290,7 +290,7 @@ def get_parse_args():
     parser.add_argument("--package_url",
                         "-u",
                         dest="package_url",
-                        default="http://linux.stable.agent.enstratius.com",
+                        default="https://linux-stable-agent.enstratius.com",
                         help="This value will set AGENT_BASE_URL")
 
     parser.add_argument("--package_location",
