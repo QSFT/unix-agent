@@ -167,6 +167,12 @@ def setup_command_line_parser():
     parser.add_argument("--cacert-file", "-A", dest="cacert_file",
                         default=None)
 
+    parser.add_argument("--intrusion-detection-ossec", "-d",
+                        dest="intrusion_detection_ossec",
+                        action='store_true',
+                        default=False,
+                        help="Flag to install and start ossec.  In addition the agent will process alerts.")
+
     return parser
 
 

@@ -106,6 +106,8 @@ class DCMAgent(object):
             self.disp.start_workers(self.request_listener)
 
             if self.conf.intrusion_detection_ossec:
+                if not utils.extras_installed(self.conf):
+                    utils.install_extras(self.conf)
                 self.intrusion_detection =\
                     ossec.AlertSender(self.conn, self._db)
                 self.intrusion_detection.start()
