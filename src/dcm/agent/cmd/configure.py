@@ -369,7 +369,8 @@ def merge_opts(conf_d, opts):
         "extra_package_location": ("extra", "location"),
         "package_name": ("extra", "package_name"),
         "allow_unknown_certs": ("connection", "allow_unknown_certs"),
-        "cacert_file": ("connection", "ca_cert")
+        "cacert_file": ("connection", "ca_cert"),
+        "intrusion_detection_ossec": ("intrusion_detection", "ossec")
     }
     for opts_name in map_opts_to_conf:
         (s, i) = map_opts_to_conf[opts_name]

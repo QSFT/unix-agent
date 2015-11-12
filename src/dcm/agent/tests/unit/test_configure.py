@@ -323,3 +323,13 @@ class TestConfigure(unittest.TestCase):
         with patch('dcm.agent.utils.run_command') as mock_run_cmd:
             mock_run_cmd.return_value = ('stdout', 'stderr', 1)
             self.assertRaises(Exception, agent_utils.install_extras, conf_args)
+
+    def test_configure_ossec(self):
+        conf_args = ["-c", "Amazon",
+                     "-u", "http://doesntmatter.org/ws",
+                     "-p", self.test_base_path,
+                     "-C", "ws",
+                     "--intrusion-detection-ossec"]
+        rc = configure.main(conf_args)
+        self.assertEqual(rc, 0)
+        self.assertTrue(os.path.exists("/opt/dcm-agent-extras/ossec"))

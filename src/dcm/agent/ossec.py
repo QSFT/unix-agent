@@ -129,7 +129,7 @@ class AlertSender(FileSystemEventHandler):
         self._cond.acquire()
         try:
             self._stopping.set()
-            self.cond.notify()
+            self._cond.notify()
         finally:
             self._cond.release()
         self.observer.stop()
@@ -142,9 +142,7 @@ class AlertSender(FileSystemEventHandler):
         self._stopping = threading.Event()
         self._thread = threading.Thread(target=self._run)
         self._thread.start()
-        self.observer.schedule(AlertSender(dir_to_watch=self.dir_to_watch,
-                                                w_file=self.w_file),
-                               path=self.dir_to_watch)
+        self.observer.schedule(AlertSender(self._conn, self._db, dir_to_watch=self.dir_to_watch, w_file=self.w_file), path=self.dir_to_watch)
         self.observer.start()
 
     def on_modified(self, event):
@@ -162,7 +160,7 @@ class AlertSender(FileSystemEventHandler):
 
         self._cond.acquire()
         try:
-            self.cond.notify()
+            self._cond.notify()
         finally:
             self._cond.release()
 
@@ -172,7 +170,7 @@ class AlertSender(FileSystemEventHandler):
         try:
             while not self._stopping.is_set():
                 # do work here
-                self.cond.wait(timeout=timeout)
+                self._cond.wait(timeout=timeout)
                 time_now = time.time()
                 time_diff = time_now - self._last_processed
                 if  time_diff < self._poll_interval:
