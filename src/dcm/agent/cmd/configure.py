@@ -167,6 +167,12 @@ def setup_command_line_parser():
     parser.add_argument("--cacert-file", "-A", dest="cacert_file",
                         default=None)
 
+    parser.add_argument("--intrusion-detection-ossec", "-d",
+                        dest="intrusion_detection_ossec",
+                        action='store_true',
+                        default=False,
+                        help="Flag to install and start ossec.  In addition the agent will process alerts.")
+
     return parser
 
 
@@ -363,7 +369,8 @@ def merge_opts(conf_d, opts):
         "extra_package_location": ("extra", "location"),
         "package_name": ("extra", "package_name"),
         "allow_unknown_certs": ("connection", "allow_unknown_certs"),
-        "cacert_file": ("connection", "ca_cert")
+        "cacert_file": ("connection", "ca_cert"),
+        "intrusion_detection_ossec": ("intrusion_detection", "ossec")
     }
     for opts_name in map_opts_to_conf:
         (s, i) = map_opts_to_conf[opts_name]

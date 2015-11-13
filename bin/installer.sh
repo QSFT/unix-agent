@@ -88,6 +88,9 @@ Optional Arguments:
   --install-extras      Install extras package
 
   --extra-package-location URL,  url of extra packages to be installed.  Default is https://linux-stable-agent.enstratius.com
+
+  --instrusion-detection-ossec, -d Flag to install and start ossec.  In addition the agent will process alerts.  Default is False
+
 "
 }
 

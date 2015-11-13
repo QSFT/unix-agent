@@ -23,7 +23,7 @@ arguments you can pass::
 
           --version [VERSION]        Required and sets AGENT_VERSION env var.
           --base_dir [DIR]           Optional and sets AGENT_BASE_DIR, default is /dcm.
-          --package_url [URL]        Optional and sets AGENT_BASE_URL, default is http://linux.stable.agent.enstratius.com
+          --package_url [URL]        Optional and sets AGENT_BASE_URL, default is http://linux-stable-agent.enstratius.com
           --allow_unknown_certs/-Z   Optional flag to disable cert validation
 
 ``--version`` is the only required parameter and is set to the version you wish to upgrade to.
@@ -31,7 +31,7 @@ arguments you can pass::
 ``--base_dir`` tells the upgrade tool where your dcm installation is located.  The default is /dcm.
 
 ``--package_url`` tells the upgrade tool where to download the agent installer and package from.  The default is
-http://linux.stable.agent.enstratius.com.
+http://linux-stable-agent.enstratius.com.
 
 ``--allow_unknown_certs/-Z`` tells the upgrade tool to specify to the agent to ignore cert checking.  This is the one
 option which will not be automatically picked up by the tool.  Starting in version 0.9.19 this was available as

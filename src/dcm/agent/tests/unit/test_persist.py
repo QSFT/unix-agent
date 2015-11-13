@@ -221,6 +221,26 @@ class TestPersistDisk(unittest.TestCase):
         res = self.db.lookup_req(request_id2)
         self.assertTrue(not res)
 
+    def test_add_alert_db(self):
+        alert_time1 = int(time.time() * 1000)
+        time_received = int(time.time() * 1000)
+        level = 1
+        rule = 5000
+        subject = "Test alert"
+        message = "test message"
+        alert_hash1 = "madeup1"
+        alert_hash2 = "madeup2"
+        alert_time2 = int(time.time() * 1000)
+
+        x = self.db.add_alert(alert_time1, time_received,
+                  alert_hash1, level, rule, subject, message)
+        y = self.db.add_alert(alert_time2, time_received,
+                  alert_hash2, level, rule, subject, message)
+
+        latest_time = self.db.get_latest_alert_time()
+        self.assertEqual(latest_time, alert_time2)
+
+
 
 class TestPersistMultiThread(unittest.TestCase):
 
