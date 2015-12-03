@@ -26,19 +26,19 @@ import shutil
 import sys
 import textwrap
 import urllib.parse
-import time
+
 import dcm.agent
 import dcm.agent.cloudmetadata as cloudmetadata
 import dcm.agent.config as config
 import dcm.agent.utils as agent_utils
 
 
+ip_addr = '127.0.0.1'
 # below are the variables with no defaults that must be determined
 cloud_choice = None
 g_user_env_str = "DCM_USER"
 g_basedir_env_str = "DCM_BASEDIR"
 
-time.sleep(20)
 _g_bundled_cert_file = "/opt/dcm-agent/embedded/ssl/certs/cacert.pem"
 _g_cert_warning = """
 *****************************************************************************
