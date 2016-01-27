@@ -529,7 +529,6 @@ class TestProtocolCommands(unittest.TestCase):
         req_reply = self._rpc_wait_reply(doc)
         r = req_reply.get_reply()
         self.assertEqual(r["payload"]["return_code"], 1)
-        self.assertEqual(r["payload"]["error_message"], "No such volume /dev/notreal")
 
     @test_utils.skip_docker
     @test_utils.system_changing
