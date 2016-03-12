@@ -466,9 +466,10 @@ def set_metadata_object(conf):
         meta_data_obj = JoyentMetaData(conf)
     elif cloud_name == CLOUD_TYPES.Google:
         meta_data_obj = GCEMetaData(conf, base_url=conf.cloud_metadata_url)
-    elif cloud_name == CLOUD_TYPES.Azure or \
-            cloud_name == CLOUD_TYPES.WindowsAzurePack:
+    elif cloud_name == CLOUD_TYPES.Azure:
         meta_data_obj = AzureMetaData(conf)
+    elif cloud_name == CLOUD_TYPES.WindowsAzurePack:
+        meta_data_obj = UnknownMetaData(conf)
     elif cloud_name == CLOUD_TYPES.OpenStack:
         meta_data_obj = OpenStackMetaData(conf,
                                           base_url=conf.cloud_metadata_url)
