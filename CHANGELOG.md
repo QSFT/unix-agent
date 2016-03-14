@@ -1,3 +1,9 @@
+# 1.2.5 (2016-03-14)
+
+Bug fixes:
+* When doing an interactive install if the user selects WAP the wrong metadata
+  type was being assigned.  This bug is fixed in this release.
+
 # 1.2.4 (2016-02-16)
 
 Bug fixes:
