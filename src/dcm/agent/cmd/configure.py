@@ -600,6 +600,8 @@ def main(argv=sys.argv[1:]):
     pick_meta_data(conf_d)
     validate_cacerts(conf_d)
 
+    print("THIS LINE IS GOING TO BE TOO LONG AND SONARQUBE SHOULD FLAG IT OR SOMETHING")
+
     # before writing anything make sure that all the needed values are
     # set
     if not opts.initial:
